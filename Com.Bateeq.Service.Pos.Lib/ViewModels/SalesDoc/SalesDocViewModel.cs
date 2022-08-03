@@ -28,7 +28,7 @@ namespace Com.Bateeq.Service.Pos.Lib.ViewModels.SalesDoc
         public List<SalesDocDetailViewModel> items { get; set; }
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if(store == null || store.Id == 0)
+            if (store == null || store.Id == 0)
             {
                 yield return new ValidationResult("store is required", new List<string> { "storeId" });
             }
@@ -45,37 +45,45 @@ namespace Com.Bateeq.Service.Pos.Lib.ViewModels.SalesDoc
             //        shift = store.Shift.shift;
             //    }
             //}
-            if(salesDetail == null)
+
+
+            if (salesDetail == null)
             {
                 yield return new ValidationResult("salesDetail is required", new List<string> { "salesDetail" });
             }
-            if (salesDetail.paymentType == null)
+            if (string.IsNullOrWhiteSpace(salesDetail.paymentType))
             {
-                yield return new ValidationResult("paymentType is required", new List<string> { "salesDetail.paymentType" });
+                yield return new ValidationResult("paymentType is required", new List<string> { "paymentType" });
             }
+
             if (salesDetail.paymentType == "Card" || salesDetail.paymentType == "Partial")
             {
-                if(salesDetail.cardType == null)
+                if (salesDetail.cardType == null || salesDetail.cardType._id == 0)
                 {
-                    yield return new ValidationResult("cardType is required", new List<string> { "salesDetail.cardType" });
+                    yield return new ValidationResult("cardType is required", new List<string> { "cardType" });
                 }
-                if(salesDetail.bank == null)
+
+                if (salesDetail.bank == null || salesDetail.bank._id == 0)
                 {
-                    yield return new ValidationResult("bank is required", new List<string> { "salesDetail.bank" });
+                    yield return new ValidationResult("bank is required", new List<string> { "bank" });
                 }
-                if (salesDetail.bankCard == null)
+
+                if (salesDetail.bankCard == null || salesDetail.bankCard._id == 0)
                 {
-                    yield return new ValidationResult("bankCard is required", new List<string> { "salesDetail.bankCard" });
+                    yield return new ValidationResult("bankCard is required", new List<string> { "bankCard" });
                 }
+
                 if (string.IsNullOrWhiteSpace(salesDetail.cardNumber))
                 {
-                    yield return new ValidationResult("cardNumber is required", new List<string> { "salesDetail.cardNumber" });
+                    yield return new ValidationResult("cardNumber is required", new List<string> { "cardNumber" });
                 }
+
                 if (string.IsNullOrWhiteSpace(salesDetail.cardName))
                 {
-                    yield return new ValidationResult("bankCard is cardName", new List<string> { "salesDetail.cardName" });
+                    yield return new ValidationResult("cardName is required", new List<string> { "cardName" });
                 }
             }
+
             if (date == null)
             {
                 yield return new ValidationResult("date is not valid", new List<string> { "date" });
@@ -99,9 +107,15 @@ namespace Com.Bateeq.Service.Pos.Lib.ViewModels.SalesDoc
                         itemErrorCount++;
                         itemError += "RO: 'No RO selected', ";
                     }
-                    
+
+                    if (item.quantity == 0)
+                    {
+                        itemErrorCount++;
+                        itemError += "there is no item left ";
+                    }
 
                     itemError += "}, ";
+                    
                 }
 
                 itemError += "]";

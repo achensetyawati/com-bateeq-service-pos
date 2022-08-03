@@ -281,6 +281,37 @@ namespace Com.Bateeq.Service.Pos.WebApi.Controllers.v1.SalesDocControllers
             }
         }
 
+        [HttpGet("readbyro/{articleRealizationOrder}")]
+        public async Task<IActionResult> getbyRO(string articleRealizationOrder)
+        {
+            try
+            {
+                List<SalesDocByRoViewModel> viewModel = Service.GetByRO(articleRealizationOrder);
+
+                if (viewModel == null)
+                {
+                    Dictionary<string, object> Result =
+                        new ResultFormatter(ApiVersion, General.NOT_FOUND_STATUS_CODE, General.NOT_FOUND_MESSAGE)
+                        .Fail();
+                    return NotFound(Result);
+                }
+                else
+                {
+                    Dictionary<string, object> Result =
+                        new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE)
+                        .Ok(viewModel);
+                    return Ok(Result);
+                }
+            }
+            catch (Exception e)
+            {
+                Dictionary<string, object> Result =
+                    new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
+                    .Fail();
+                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, Result);
+            }
+            
+        }
 
     }
 }

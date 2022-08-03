@@ -137,7 +137,7 @@ namespace Com.Bateeq.Service.Pos.Lib.Services.SalesDocService
         }
         public List<SalesDoc> OmzetReport(string storecode, DateTimeOffset dateFrom, DateTimeOffset dateTo, string shift)
         {
-            var a = DbSet.Where(m => m.StoreCode == storecode && m.Date.Date >= dateFrom.Date && m.Date.Date <= dateFrom.Date && m.Shift == (string.IsNullOrWhiteSpace(shift) ? m.Shift : Convert.ToInt32(shift)))
+            var a = DbSet.Where(m =>m.isVoid== false && m.StoreCode == storecode && m.Date.Date >= dateFrom.Date && m.Date.Date <= dateFrom.Date && m.Shift == (string.IsNullOrWhiteSpace(shift) ? m.Shift : Convert.ToInt32(shift)))
                     .Include(m => m.Details);
 
             return a.ToList();
@@ -522,25 +522,29 @@ namespace Com.Bateeq.Service.Pos.Lib.Services.SalesDocService
 
                         foreach(var i in oldM.Details)
                         {
-                            transferInDocItems.Add(new TransferInDocItemViewModel
+                            if (!i.isReturn)
                             {
-                                item = new ItemViewModels
+                                transferInDocItems.Add(new TransferInDocItemViewModel
                                 {
-                                    articleRealizationOrder = i.ItemArticleRealizationOrder,
-                                    code = i.ItemCode,
-                                    domesticCOGS = i.ItemDomesticCOGS,
-                                    domesticRetail = i.ItemDomesticRetail,
-                                    domesticSale = i.ItemDomesticSale,
-                                    domesticWholesale = i.ItemDomesticWholeSale,
-                                    name = i.ItemName,
-                                    size = i.ItemSize,
-                                    uom = i.ItemUom,
-                                    _id = i.ItemId
-                                },
-                                remark = oldM.Remark,
-                                sendquantity = i.Quantity
-                            });
+                                    item = new ItemViewModels
+                                    {
+                                        articleRealizationOrder = i.ItemArticleRealizationOrder,
+                                        code = i.ItemCode,
+                                        domesticCOGS = i.ItemDomesticCOGS,
+                                        domesticRetail = i.ItemDomesticRetail,
+                                        domesticSale = i.ItemDomesticSale,
+                                        domesticWholesale = i.ItemDomesticWholeSale,
+                                        name = i.ItemName,
+                                        size = i.ItemSize,
+                                        uom = i.ItemUom,
+                                        _id = i.ItemId
+                                    },
+                                    remark = oldM.Remark,
+                                    sendquantity = i.Quantity
+                                });
+                            }
                         }
+
                         transferInDocView.code = GenerateCode("voidsales");
                         transferInDocView.destination = new DestinationViewModel
                         {
@@ -594,6 +598,7 @@ namespace Com.Bateeq.Service.Pos.Lib.Services.SalesDocService
                          select new PaymentMethodReportViewModel
                          {
                              Code = c.Code == "" ? "-" : c.Code,
+							 BankCard = c.BankCardName,
                              Date = c.Date,
                              BankName = c.BankName == "" ? "-" : c.BankName,
                              Card = c.Card == "" ? "-" : c.Card,
@@ -710,6 +715,7 @@ namespace Com.Bateeq.Service.Pos.Lib.Services.SalesDocService
             var Query = (from c in DbContext.SalesDocs
                          join a in DbContext.SalesDocDetails on c.Id equals a.SalesDocId
                          where
+						 c.isVoid == false &&
                          c._IsDeleted == false
                          && a._IsDeleted == false
                          //&& c.StorageId == (string.IsNullOrWhiteSpace(storageId) ? c.StorageId : storageId)
@@ -1144,11 +1150,41 @@ namespace Com.Bateeq.Service.Pos.Lib.Services.SalesDocService
         }
 
         #endregion 
+        /*
+        public List<SalesDocByRoViewModel> GetByRO(string articleRealizationOrder)
+        {
+            var Query = GetByRoQuery(articleRealizationOrder);
+            return Query.ToList();
+        }
+        */
+        public List<SalesDocByRoViewModel> GetByRO(string articleRealizationOrder)
+        {
+            var Query = (from a in DbContext.SalesDocs
+                         join b in DbContext.SalesDocDetails on a.Id equals b.SalesDocId
 
+                         where b.ItemArticleRealizationOrder == articleRealizationOrder
+                         && a.isReturn == false
+                         && a.isVoid == false
+                         && a._IsDeleted == false
+                         && b._IsDeleted == false
 
+                         orderby b._CreatedUtc descending
 
+                         group new { a, b } by new { a.StoreCode, a.StoreName, b.ItemSize, b.Quantity ,b.ItemArticleRealizationOrder, b.ItemCode } into data
+                         
+                         select new SalesDocByRoViewModel
+                         {
+                             StoreCode = data.Key.StoreCode,
+                             StoreName = data.Key.StoreName,
+                             ItemArticleRealizationOrder = data.Key.ItemArticleRealizationOrder,
+                             ItemCode = data.Key.ItemCode,
 
+                             size = data.Key.ItemSize,
+                             quantityOnSales = data.Sum(x => x.b.Quantity),
+                         });
 
+            return Query.ToList();
 
+        }
     }
 }

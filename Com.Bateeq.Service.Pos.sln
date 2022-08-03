@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{379C64CD
 		Dockerfile.test.build.sh = Dockerfile.test.build.sh
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.Bateeq.Service.Pos.Lib", "Com.Bateeq.Service.Pos.Lib\Com.Bateeq.Service.Pos.Lib.csproj", "{96BAA412-EF1A-47F8-B15F-8E0433CA3E37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.Bateeq.Service.Pos.Lib", "Com.Bateeq.Service.Pos.Lib\Com.Bateeq.Service.Pos.Lib.csproj", "{EC4772BF-F736-4CF4-A829-9900DEA1430A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.Bateeq.Service.Pos.WebApi", "Com.Bateeq.Service.Pos.WebApi\Com.Bateeq.Service.Pos.WebApi.csproj", "{3F27958F-779D-4127-8750-A0902031558D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.Bateeq.Service.Pos.Test", "Com.Bateeq.Service.Pos.Test\Com.Bateeq.Service.Pos.Test.csproj", "{140F062F-04F3-4F5B-9695-D95EBCDEA4F2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.Bateeq.Service.Pos.Test", "Com.Bateeq.Service.Pos.Test\Com.Bateeq.Service.Pos.Test.csproj", "{3353CB11-76CB-4CF7-94E3-39A175C5F6CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.Bateeq.Service.Pos.WebApi", "Com.Bateeq.Service.Pos.WebApi\Com.Bateeq.Service.Pos.WebApi.csproj", "{51BC69E3-1182-4A1D-8760-1FDEA71E0126}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,18 +25,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{96BAA412-EF1A-47F8-B15F-8E0433CA3E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96BAA412-EF1A-47F8-B15F-8E0433CA3E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96BAA412-EF1A-47F8-B15F-8E0433CA3E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96BAA412-EF1A-47F8-B15F-8E0433CA3E37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F27958F-779D-4127-8750-A0902031558D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F27958F-779D-4127-8750-A0902031558D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F27958F-779D-4127-8750-A0902031558D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F27958F-779D-4127-8750-A0902031558D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3353CB11-76CB-4CF7-94E3-39A175C5F6CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3353CB11-76CB-4CF7-94E3-39A175C5F6CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3353CB11-76CB-4CF7-94E3-39A175C5F6CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3353CB11-76CB-4CF7-94E3-39A175C5F6CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC4772BF-F736-4CF4-A829-9900DEA1430A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC4772BF-F736-4CF4-A829-9900DEA1430A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC4772BF-F736-4CF4-A829-9900DEA1430A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC4772BF-F736-4CF4-A829-9900DEA1430A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{140F062F-04F3-4F5B-9695-D95EBCDEA4F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{140F062F-04F3-4F5B-9695-D95EBCDEA4F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{140F062F-04F3-4F5B-9695-D95EBCDEA4F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{140F062F-04F3-4F5B-9695-D95EBCDEA4F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51BC69E3-1182-4A1D-8760-1FDEA71E0126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51BC69E3-1182-4A1D-8760-1FDEA71E0126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51BC69E3-1182-4A1D-8760-1FDEA71E0126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51BC69E3-1182-4A1D-8760-1FDEA71E0126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

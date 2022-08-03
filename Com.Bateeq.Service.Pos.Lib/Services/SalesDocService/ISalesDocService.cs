@@ -26,5 +26,6 @@ namespace Com.Bateeq.Service.Pos.Lib.Services.SalesDocService
         Tuple<TotalCategoryViewModel, int> GetOmzetDailyReport(DateTimeOffset dateFrom, DateTimeOffset dateTo, int offset, int page = 1, int size = 25, string Order = "{}");
         List<SalesDoc> OmzetReport(string storecode, DateTimeOffset dateFrom, DateTimeOffset dateTo, string shift);
         MemoryStream GenerateExcelOmzet(string storecode, DateTimeOffset dateFrom, DateTimeOffset dateTo, string shift);
+        List<SalesDocByRoViewModel> GetByRO(string articleRealizationOrder);
     }
 }

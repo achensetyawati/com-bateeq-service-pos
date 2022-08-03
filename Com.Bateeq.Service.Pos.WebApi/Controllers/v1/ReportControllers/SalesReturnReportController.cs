@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Com.MajorMinor.Service.Pos.WebApi.Controllers.v1.ReportControllers
+namespace Com.Bateeq.Service.Pos.WebApi.Controllers.v1.ReportControllers
 {
 
     [Produces("application/json")]
@@ -38,12 +38,12 @@ namespace Com.MajorMinor.Service.Pos.WebApi.Controllers.v1.ReportControllers
             ApiVersion = "1.0.0";
         }
 
-        protected void VerifyUser()
-        {
-            IdentityService.Username = User.Claims.ToArray().SingleOrDefault(p => p.Type.Equals("username")).Value;
-            IdentityService.Token = Request.Headers["Authorization"].FirstOrDefault().Replace("Bearer ", "");
-            IdentityService.TimezoneOffset = Convert.ToInt32(Request.Headers["x-timezone-offset"]);
-        }
+        //protected void VerifyUser()
+        //{
+        //    IdentityService.Username = User.Claims.ToArray().SingleOrDefault(p => p.Type.Equals("username")).Value;
+        //    IdentityService.Token = Request.Headers["Authorization"].FirstOrDefault().Replace("Bearer ", "");
+        //    IdentityService.TimezoneOffset = Convert.ToInt32(Request.Headers["x-timezone-offset"]);
+        //}
 
         //[HttpGet]
         //public IActionResult Get(string storecode, DateTimeOffset dateFrom, DateTimeOffset dateTo, string shift, string info, int offset, string username, int page = 1, int size = 25, string Order = "{}")

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Com.MajorMinor.Service.Pos.WebApi.Controllers.v1.ReportControllers
+namespace Com.Bateeq.Service.Pos.WebApi.Controllers.v1.ReportControllers
 {
 
     [Produces("application/json")]
@@ -78,8 +78,10 @@ namespace Com.MajorMinor.Service.Pos.WebApi.Controllers.v1.ReportControllers
         {
             try
             {
+				VerifyUser();
 
-                List<SalesDoc> model = Service.OmzetReport(storecode, dateFrom, dateTo, shift);
+
+				List<SalesDoc> model = Service.OmzetReport(storecode, dateFrom, dateTo, shift);
 
 
                 Dictionary<string, object> Result =
@@ -104,7 +106,8 @@ namespace Com.MajorMinor.Service.Pos.WebApi.Controllers.v1.ReportControllers
 
             try
             {
-                byte[] xlsInBytes;
+				VerifyUser();
+				byte[] xlsInBytes;
                 int offset = Convert.ToInt32(Request.Headers["x-timezone-offset"]);
                 DateTime DateFrom = dateFrom == null ? new DateTime(1970, 1, 1) : Convert.ToDateTime(dateFrom);
                 DateTime DateTo = dateTo == null ? DateTime.Now : Convert.ToDateTime(dateTo);

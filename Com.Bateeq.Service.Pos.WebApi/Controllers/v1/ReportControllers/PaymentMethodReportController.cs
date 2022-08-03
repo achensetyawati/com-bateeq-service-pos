@@ -47,7 +47,6 @@ namespace Com.Bateeq.Service.Pos.WebApi.Controllers.v1.ReportControllers
                 VerifyUser();
                 var data = Service.GetPaymentMethodReport(storecode, dateFrom, dateTo, shift, info, offset, username, page, size, Order);
 
-
                 return Ok(new
                 {
                     apiVersion = ApiVersion,

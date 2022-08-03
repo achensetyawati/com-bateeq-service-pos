@@ -14,15 +14,12 @@ using Com.Bateeq.Service.Pos.Lib.ViewModels.SalesDocReturn;
 using Com.Bateeq.Service.Pos.Lib.Models.SalesDoc;
 using Com.Bateeq.Service.Pos.Lib.ViewModels.SalesDoc;
 using System.Threading.Tasks;
-using Com.Bateeq.Service.Pos.Lib.Services.SalesDocService;
 using Com.Moonlay.Models;
-using Com.Bateeq.Service.Pos.Lib.Models.SalesDoc;
 using Com.Bateeq.Service.Pos.Lib.ViewModels.NewIntegrationViewModel;
 using Com.Bateeq.Service.Pos.Lib.Interfaces;
 using System.Net.Http;
 using MongoDB.Bson;
-using HashidsNet;
-using Com.Bateeq.Service.Pos.Lib.ViewModels.NewIntegrationViewModel;
+using HashidsNet; 
 
 namespace Com.Bateeq.Service.Pos.Lib.Services.SalesDocReturnService
 {
@@ -33,17 +30,15 @@ namespace Com.Bateeq.Service.Pos.Lib.Services.SalesDocReturnService
         protected DbSet<SalesDocDetailReturnItem> DbSetSales;
         protected DbSet<SalesDoc> DbSetSalesDoc;
         public IIdentityService IdentityService;
-        private ISalesDocService salesDocFacade;
         public readonly IServiceProvider ServiceProvider;
         public PosDbContext DbContext;
-        public SalesDocReturnService(IServiceProvider serviceProvider, PosDbContext dbContext, ISalesDocService salesDocService)
+        public SalesDocReturnService(IServiceProvider serviceProvider, PosDbContext dbContext)
         {
             DbContext = dbContext;
             ServiceProvider = serviceProvider;
             DbSet = dbContext.Set<SalesDocReturn>();
             DbSetSalesDoc = dbContext.Set<SalesDoc>();
             DbSetSales = DbContext.Set<SalesDocDetailReturnItem>();
-            salesDocFacade = salesDocService;
             IdentityService = serviceProvider.GetService<IIdentityService>();
         }
         public Tuple<List<SalesDocReturn>, int, Dictionary<string, string>, List<string>> ReadModel(string storecode, int Page = 1, int Size = 25, string Order = "{}", string Keyword = null, string Filter = "{}", string Username = "")
@@ -945,11 +940,14 @@ namespace Com.Bateeq.Service.Pos.Lib.Services.SalesDocReturnService
         }
         public StoreViewModels GetStore(string storeCode)
         {
-            string storeUri = "master/stores/code";
+            //string storeUri = "master/stores/code";
             IHttpClientService httpClient = (IHttpClientService)ServiceProvider.GetService(typeof(IHttpClientService));
             if (httpClient != null)
             {
-                var response = httpClient.GetAsync($"{APIEndpoint.Core}{storeUri}?code={storeCode}").Result.Content.ReadAsStringAsync();
+                var storeUri = APIEndpoint.Core + $"master/stores/code";
+                string queryUri = $"?code={storeCode}";
+                string uri = storeUri + queryUri;
+                var response = httpClient.GetAsync($"{uri}").Result.Content.ReadAsStringAsync();
                 Dictionary<string, object> result = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Result);
                 StoreViewModels viewModel = JsonConvert.DeserializeObject<StoreViewModels>(result.GetValueOrDefault("data").ToString());
                 //viewModel = viewModel.Where(x => x.name == (string.IsNullOrWhiteSpace(storeCode) ? x.name : storeCode)).ToList();

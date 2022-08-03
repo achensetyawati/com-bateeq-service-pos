@@ -10,7 +10,8 @@ namespace Com.Bateeq.Service.Pos.Lib.ViewModels.SalesDoc
         public string Code { get; set; }
         public DateTimeOffset Date { get; set; }
         public string BankName { get; set; }
-        public string Card { get; set; }
+		public string BankCard { get; set; }
+		public string Card { get; set; }
         public double CardAmount { get; set; }
         public string CardTypeName { get; set; }
         public bool IsVoid { get; set; }
